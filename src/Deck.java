@@ -25,5 +25,15 @@ public class Deck {
         return cardsLeft;
     }
 
+    public Card deal() {
+        if (isEmpty()) {
+            return null;
+        }
+        cardsLeft--;
+        return cards.get(cardsLeft);
+    }
 
+    public void shuffle() {
+        Collections.shuffle(cards);
+    }
 }
