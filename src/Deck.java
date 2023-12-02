@@ -12,8 +12,7 @@ public class Deck {
                 cards.add(new Card(suits[i], ranks[k], values[k]));
             }
         }
-
-        //Collections.shuffle(cards);
+        shuffle();
         cardsLeft = cards.size();
     }
 
