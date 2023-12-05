@@ -1,3 +1,4 @@
+// Kieran Pichai CardGame 2023 (CS2)
 public class Card {
     private String suit;
     private String rank;

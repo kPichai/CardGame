@@ -1,3 +1,4 @@
+// Kieran Pichai CardGame 2023 (CS2)
 import java.util.ArrayList;
 
 public class Player {
@@ -29,6 +30,10 @@ public class Player {
         return points;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     public void addPoints(int points) {
         this.points += points;
     }
@@ -43,6 +48,7 @@ public class Player {
         for (int i = 0; i < hand.size(); i++) {
             if (i == hand.size() - 1) {
                 str += hand.get(i).toString() + ".";
+                continue;
             }
             str += hand.get(i).toString() + ", ";
         }
