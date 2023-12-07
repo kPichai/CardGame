@@ -1,6 +1,7 @@
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.lang.Integer;
 
 // Kieran Pichai CardGame 2023 (CS2)
 public class CardGame {
@@ -87,11 +88,11 @@ public class CardGame {
         return false;
     }
 
-    public ArrayList<Integer> checkInstances(String nameOfCard, ArrayList<Card> c1) {
-        ArrayList<Integer> removed = new ArrayList<Integer>();
-        for (int i = p2.getHand().size() - 1; i >= 0 ; i--) {
+    public ArrayList<Card> checkInstances(String nameOfCard, ArrayList<Card> c1) {
+        ArrayList<Card> removed = new ArrayList<Card>();
+        for (int i = c1.size() - 1; i > -1 ; i--) {
             if (c1.get(i).getRank().equals(nameOfCard)) {
-                removed.add(i);
+                removed.add(c1.get(i));
             }
         }
         return removed;
@@ -102,15 +103,26 @@ public class CardGame {
         printInstructions();
         String response;
         int turn = 0;
+        int firstTurn = 0;
         Player possibleWinner = null;
+        do {
+            System.out.println("If you are ready to begin type: y");
+        } while(!sc.nextLine().equals("y"));
         while (possibleWinner ==  null) {
             if (turn == 0) {
+                if (firstTurn != 0) {
+                    do {
+                        System.out.println("If you are ready to continue type: y");
+                    } while(!sc.nextLine().equals("y"));
+                    System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                }
+                firstTurn = 1;
                 System.out.println(p1.toString());
                 do {
                     System.out.println("Player 1: What card would you like to fish for? (Your answer can be 2-10 or Jack, Queen, King, Ace and must also be a card currently in your hand)");
                     response = sc.nextLine();
                 } while (!checkValidTurn(response, turn));
-                ArrayList<Integer> toRemove = checkInstances(response, p2.getHand());
+                ArrayList<Card> toRemove = checkInstances(response, p2.getHand());
                 if (toRemove.isEmpty()) {
                     turn = 1;
                     p1.addCard(deck.deal());
@@ -118,23 +130,26 @@ public class CardGame {
                     System.out.println("You drew a " + p1.getHand().get(p1.getHand().size() - 1) + ".");
                 } else {
                     for (int i = 0; i < toRemove.size(); i++) {
-                        p1.addCard(p2.getHand().get(toRemove.get(i)));
+                        p1.addCard(toRemove.get(i));
                     }
-                    for (int i = 0; i < toRemove.size(); i++) {
+                    for (int i = toRemove.size() - 1; i > -1 ; i--) {
                         p2.getHand().remove(toRemove.get(i));
                     }
                     System.out.println("Nice job! You gained " + toRemove.size() + " " + response + "'s.");
                     System.out.println("You get another turn now!");
                 }
             }
-            System.out.flush();
             if (turn == 1) {
+                do {
+                    System.out.println("If you are ready to continue type: y");
+                } while(!sc.nextLine().equals("y"));
+                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                 System.out.println(p2.toString());
                 do {
                     System.out.println("Player 2: What card would you like to fish for? (Your answer can be 2-10 or Jack, Queen, King, Ace and must also be a card currently in your hand)");
                     response = sc.nextLine();
                 } while (!checkValidTurn(response, turn));
-                ArrayList<Integer> toRemove = checkInstances(response, p1.getHand());
+                ArrayList<Card> toRemove = checkInstances(response, p1.getHand());
                 if (toRemove.isEmpty()) {
                     turn = 0;
                     p2.addCard(deck.deal());
@@ -142,16 +157,15 @@ public class CardGame {
                     System.out.println("You drew a " + p2.getHand().get(p2.getHand().size() - 1) + ".");
                 } else {
                     for (int i = 0; i < toRemove.size(); i++) {
-                        p2.addCard(p1.getHand().get(toRemove.get(i)));
+                        p2.addCard(toRemove.get(i));
                     }
-                    for (int i = 0; i < toRemove.size(); i++) {
+                    for (int i = toRemove.size() - 1; i > -1 ; i--) {
                         p1.getHand().remove(toRemove.get(i));
                     }
                     System.out.println("Nice job! You gained " + toRemove.size() + " " + response + "'s.");
                     System.out.println("You get another turn now!");
                 }
             }
-            System.out.flush();
             possibleWinner = checkGameEnd();
         }
         System.out.println("Congrats on winning " + checkGameEnd().getName() + "!");

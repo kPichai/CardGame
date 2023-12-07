@@ -1,7 +1,6 @@
 // Kieran Pichai CardGame 2023 (CS2)
 import java.util.ArrayList;
 import java.lang.Math;
-import java.util.Collections;
 
 public class Deck {
     private ArrayList<Card> cards;
@@ -14,8 +13,8 @@ public class Deck {
                 cards.add(new Card(suits[i], ranks[k], values[k]));
             }
         }
-        shuffle();
         cardsLeft = cards.size();
+        shuffle();
     }
 
     public boolean isEmpty() {
@@ -39,12 +38,11 @@ public class Deck {
     }
 
     public void shuffle() {
-//      for (int i = cardsLeft - 1; i > -1; i++) {
-//          int randIndex = (int)(Math.random()*i);
-//          Card temp = cards.get(randIndex);
-//          cards.set(randIndex, cards.get(i));
-//          cards.set(i, temp);
-//      }
-        Collections.shuffle(cards);
+      for (int i = cardsLeft - 1; i > -1; i--) {
+          int randIndex = (int)(Math.random()*i);
+          Card temp = cards.get(randIndex);
+          cards.set(randIndex, cards.get(i));
+          cards.set(i, temp);
+      }
     }
 }
